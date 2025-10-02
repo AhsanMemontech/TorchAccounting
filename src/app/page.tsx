@@ -364,7 +364,7 @@ export default function SignupPage() {
               
               <div className="text-center mt-6">
                 <a onClick={() => setActiveTab('signup')} className="text-teal-600 hover:text-teal-700 text-sm hover:underline">
-                  Don't have an account? Sign up
+                  Don&apos;t have an account? Sign up
                 </a>
               </div>
             </div>
