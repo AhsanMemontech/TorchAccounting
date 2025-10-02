@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables for Dark Theme */
+:root {
+  /* Dark Theme Colors */
+  --bg-primary: #141c28;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-overlay: rgba(15, 23, 42, 0.95);
+  --bg-user-logo: #0688a4;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-muted: #64748b;
+  --bg-button: #0688a4;
+  
+  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-secondary: rgba(255, 255, 255, 0.2);
+  --border-accent: rgba(6, 182, 212, 0.3);
+  
+  --accent-primary: #047c91;
+  --accent-secondary: #0891b2;
+  --accent-tertiary: #1f2937;
+  --accent-quaternary: #202b3b;
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-error: #ef4444;
+  
+  --shadow-primary: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-secondary: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+/* Light Theme Colors - Improved */
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-overlay: #f9f9f9;
+  --bg-user-logo: #6d757e;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #1e293b;
+  --text-tertiary: #475569;
+  --text-muted: #64748b;
+  --bg-button: #313438;
+  
+  --border-primary: rgba(0, 0, 0, 0.15);
+  --border-secondary: rgba(0, 0, 0, 0.25);
+  --border-accent: rgba(6, 182, 212, 0.4);
+  
+  --accent-primary: #f0f0f0;
+  --accent-secondary: #e8e7e7;
+  --accent-tertiary: #f0f0f0;
+  --accent-quaternary: #e8e7e7;
+  --accent-success: #059669;
+  --accent-warning: #d97706;
+  --accent-error: #dc2626;
+  
+  --shadow-primary: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-secondary: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 20px rgba(8, 145, 178, 0.2);
+}
+
+/* Apply theme colors to body */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom animations for AI assistant */
+@keyframes slideup {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.8), 0 0 40px rgba(6, 182, 212, 0.4);
+  }
+}
+
+.border-desktop {
+  border: 1px solid var(--border-secondary);
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    top: 4.85rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    top: 4.5rem;
+  }
+  .no-border{
+    border: none !important;
+  }
+}
+
+.animate-slideup {
+  animation: slideup 0.3s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Custom scrollbar for chatbot */
+.chatbot-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-primary), #3b82f6);
+  border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-secondary), #2563eb);
+}
+
+/* Lawyer dropdown styling */
+.lawyer-dropdown {
+  backdrop-filter: blur(10px);
+}
+
+/* Enhanced button hover effects */
+.group:hover .group-hover\:shadow-cyan-500\/25 {
+  box-shadow: var(--shadow-glow);
+}
+
+/* AI assistant button enhancements */
+.ai-assistant-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-assistant-button:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Pulse animation for online indicator */
+@keyframes pulse-green {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+} 
+
+html {
+  background-color: var(--bg-primary);
+}
