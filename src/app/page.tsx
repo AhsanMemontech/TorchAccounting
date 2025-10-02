@@ -332,7 +332,7 @@ export default function SignupPage() {
                   <input
                     type="email"
                     value={loginData.email}
-                    onChange={(e) => setLoginData({...formData, email: e.target.value})}
+                    onChange={(e) => setLoginData({...loginData, email: e.target.value})}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-teal-500 transition-all"
                     placeholder="Email"
                     required
@@ -347,7 +347,7 @@ export default function SignupPage() {
                   <input
                     type="password"
                     value={loginData.password}
-                    onChange={(e) => setLoginData({...formData, password: e.target.value})}
+                    onChange={(e) => setLoginData({...loginData, password: e.target.value})}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-teal-500 transition-all"
                     placeholder="Password"
                     required
