@@ -8,15 +8,15 @@ import { User, Mail, Lock, Phone } from 'lucide-react'
 export default function SignupPage() {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    name: 'Ahsan',
-    email: 'ahsan@thebeacons.org',
-    phone: '+923030361643',
-    password: 'abcd1234'
+    name: '',
+    email: '',
+    phone: '',
+    password: ''
   })
 
   const [loginData, setLoginData] = useState({
-    email: 'ahsan@thebeacons.org',
-    password: 'abcd1234'
+    email: '',
+    password: ''
   })
 
   const [error, setError] = useState<string | null>(null)
@@ -88,6 +88,7 @@ export default function SignupPage() {
 
       if(response.ok){
         console.log("r: ", await response.json())
+        setError("Please confirm your signup! Email has been sent.")
       }else{
         console.log("r: ", await response.json())
       }

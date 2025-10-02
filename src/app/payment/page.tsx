@@ -97,88 +97,70 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          {/* <div className="mt-5 text-center mb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-              Service Payment
-            </h1>
-          </div> */}
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-1 gap-8 mb-8">
+          <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br px-6">
+            {/* Header / Description */}
+            <div className="text-center max-w-xl mb-12">
+              <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+                Complete Your Purchase
+              </h2>
+              <p className="text-lg text-gray-700">
+                Secure your one-time service package today. Once your payment is
+                confirmed, you&apos;ll receive instant access to your full setup and
+                onboarding support.
+              </p>
+            </div>
 
             {/* Paid Service Card */}
-            <div className="rounded-xl border p-8 backdrop-blur-sm shadow-2xl h-full mx-auto" style={{ 
-              backgroundColor: 'var(--bg-card)', 
-              borderColor: 'var(--border-secondary)' 
-            }}>
+            <div
+              className="rounded-2xl border p-8 backdrop-blur-md shadow-xl w-full max-w-md transition-transform hover:scale-[1.02] hover:shadow-2xl"
+              style={{
+                borderColor: "rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg"
-                  style={{ backgroundColor: 'var(--bg-user-logo)' }}>
+                <div
+                  className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg"
+                  style={{
+                    background: "linear-gradient(135deg, #0b2145, #07101f)",
+                  }}
+                >
                   <CreditCard className="h-8 w-8 text-white" />
                 </div>
-                {/* <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Full Service</h3> */}
-                <div className="text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>${amountInDollar}</div>
-                <p style={{ color: 'var(--text-muted)' }}>one-time payment</p>
+                <div className="text-4xl font-extrabold mb-2 text-gray-600">
+                  ${amountInDollar}
+                </div>
+                <p className="text-sm text-gray-500">One-time payment</p>
               </div>
-
-              {/* <div className="space-y-4 mb-8">
-                <div className="flex items-center space-x-3">
-                  <Check className="h-5 w-5" style={{ color: 'var(--text-primary)' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>All trial features included</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="h-5 w-5" style={{ color: 'var(--text-primary)' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>Lifetime access</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="h-5 w-5" style={{ color: 'var(--text-primary)' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>Priority customer support</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="h-5 w-5" style={{ color: 'var(--text-primary)' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>Updates and improvements</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="h-5 w-5" style={{ color: 'var(--text-primary)' }} />
-                  <span style={{ color: 'var(--text-secondary)' }}>Secure payment processing</span>
-                </div>
-              </div> */}
 
               <button
                 onClick={handlePay}
                 disabled={isPaying}
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-colors ${
+                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-all duration-300 flex items-center justify-center space-x-2 ${
                   isPaying
-                    ? 'cursor-not-allowed'
-                    : ''
+                    ? "cursor-not-allowed bg-gray-700 text-gray-400"
+                    : "bg-gradient-to-r from-[#0b2145] to-[#07101f] text-white hover:from-[#07101f] hover:to-[#0b2145]"
                 }`}
-                style={{
-                  backgroundColor: isPaying
-                    ? 'var(--bg-tertiary)' 
-                    : 'var(--bg-button)',
-                  color: isPaying
-                    ? 'var(--text-muted)' 
-                    : 'white'
-                }}
               >
                 {isPaying ? (
-                  <div className="flex items-center justify-center space-x-2">
+                  <>
                     <Lock className="h-5 w-5 animate-pulse" />
                     <span>Processing Payment...</span>
-                  </div>
+                  </>
                 ) : (
-                  <div className="flex items-center justify-center space-x-2">
+                  <>
                     <CreditCard className="h-5 w-5" />
                     <span>Pay ${amountInDollar}</span>
                     <ArrowRight className="h-5 w-5" />
-                  </div>
+                  </>
                 )}
               </button>
             </div>
           </div>
+
 
           {/* Error Display */}
           {error && (
