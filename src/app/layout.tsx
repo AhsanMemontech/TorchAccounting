@@ -9,9 +9,9 @@ import './waiting-list.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Uncouple - AI-Powered Uncontested Divorce for New York',
-  description: 'Streamline your uncontested divorce process in New York State with our AI-powered tool. Get the forms you need, understand the process, and save time and money.',
-  keywords: 'divorce, uncontested divorce, New York divorce, divorce forms, AI divorce, legal forms',
+  title: 'Torch Accouning',
+  description: 'Torch Accouning',
+  keywords: '',
 }
 
 // 👇 Move this outside `metadata`
