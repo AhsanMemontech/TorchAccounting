@@ -136,7 +136,7 @@ export default function SignupPage() {
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full max-h-[600px] flex flex-col lg:flex-row">
           
           {/* Left Section - Login */}
-          <div className="relative bg-gradient-to-br from-teal-400 to-emerald-600 p-8 lg:p-12 flex flex-col justify-center items-center text-white min-h-[400px] lg:min-h-full"
+          <div className="relative bg-gradient-to-br to-[#071429] via-[#091731] from-[#0b2145] p-8 lg:p-12 flex flex-col justify-center items-center text-white min-h-[400px] lg:min-h-full"
             style={{width: '40%'}}>
             {/* Decorative Elements */}
             <div className="absolute top-4 left-4 flex items-center space-x-2">
@@ -167,7 +167,7 @@ export default function SignupPage() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-white bg-opacity-20 border-2 border-white text-emerald-700 font-semibold py-3 px-6 rounded-lg hover:bg-opacity-30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="w-full bg-white bg-opacity-20 border-2 border-white color-white font-semibold py-3 px-6 rounded-lg hover:bg-opacity-30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   onClick={() => setActiveTab('login')}
                 >
                   SIGN IN
@@ -183,7 +183,7 @@ export default function SignupPage() {
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-500 rounded-full opacity-60"></div>
             
             <div className="max-w-sm mx-auto w-full">
-              <h2 className="text-2xl lg:text-3xl font-bold text-teal-600 mb-6">Create Account</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold color-[#0b2145] mb-6">Create Account</h2>
               
               <form onSubmit={handleSignup} className="space-y-4">
                 {error && <div className="text-red-500 text-sm bg-red-50 p-2 rounded">{error}</div>}
@@ -250,7 +250,7 @@ export default function SignupPage() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="w-full bg-[#0b2145] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#0b2145] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   disabled={loading}
                 >
                   {loading ? 'Creating Account...' : 'SIGN UP'}
@@ -258,7 +258,7 @@ export default function SignupPage() {
               </form>
               
               <div className="text-center mt-6">
-                <a onClick={() => setActiveTab('login')} className="text-teal-600 hover:text-teal-700 text-sm hover:underline">
+                <a onClick={() => setActiveTab('login')} className="color-[#0b2145] hover:color-[#0b2145] text-sm hover:underline">
                   Already have an account? Sign in
                 </a>
               </div>
@@ -271,7 +271,7 @@ export default function SignupPage() {
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full max-h-[600px] flex flex-col lg:flex-row">
           
           {/* Left Section - Login */}
-          <div className="relative bg-gradient-to-br from-teal-400 to-emerald-600 p-8 lg:p-12 flex flex-col justify-center items-center text-white min-h-[400px] lg:min-h-full"
+          <div className="relative bg-gradient-to-br to-[#071429] via-[#091731] from-[#0b2145] p-8 lg:p-12 flex flex-col justify-center items-center text-white min-h-[400px] lg:min-h-full"
             style={{width: '40%'}}>
             {/* Decorative Elements */}
             <div className="absolute top-4 left-4 flex items-center space-x-2">
@@ -292,7 +292,7 @@ export default function SignupPage() {
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-yellow-400 rounded-full opacity-80"></div>
             
             <div className="text-center z-10">
-              <h1 className="text-2xl lg:text-3xl font-bold mb-4">Create Account!</h1>
+              <h1 className="text-2xl lg:text-3xl bg-[#0b2145] font-bold mb-4">Create Account!</h1>
               <p className="text-lg lg:text-xl mb-8 opacity-90 max-w-xs">
                 Pleae create an account with your personal info
               </p>
@@ -302,7 +302,7 @@ export default function SignupPage() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-white bg-opacity-20 border-2 border-white text-emerald-700 font-semibold py-3 px-6 rounded-lg hover:bg-opacity-30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="w-full bg-white bg-opacity-20 border-2 border-white color-white font-semibold py-3 px-6 rounded-lg hover:bg-opacity-30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   onClick={() => setActiveTab('signup')}
                 >
                   SIGN UP
@@ -318,7 +318,7 @@ export default function SignupPage() {
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-500 rounded-full opacity-60"></div>
             
             <div className="max-w-sm mx-auto w-full">
-              <h2 className="text-2xl lg:text-3xl font-bold text-teal-600 mb-6">Sign In</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold bg-white mb-6">Sign In</h2>
               
               <form onSubmit={handleLogin} className="space-y-4">
                 {error && <div className="text-red-500 text-sm bg-red-50 p-2 rounded">{error}</div>}
@@ -355,7 +355,7 @@ export default function SignupPage() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="w-full bg-[#0b2145] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#0b2145] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   disabled={loading}
                 >
                   {loading ? 'Signing in...' : 'SIGN IN'}
@@ -363,7 +363,7 @@ export default function SignupPage() {
               </form>
               
               <div className="text-center mt-6">
-                <a onClick={() => setActiveTab('signup')} className="text-teal-600 hover:text-teal-700 text-sm hover:underline">
+                <a onClick={() => setActiveTab('signup')} className="color-[#0b2145] hover:color-[#0b2145] text-sm hover:underline">
                   Don&apos;t have an account? Sign up
                 </a>
               </div>
