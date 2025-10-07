@@ -8,6 +8,7 @@ import { User, Mail, Lock, Phone } from 'lucide-react'
 export default function SignupPage() {
   const router = useRouter()
   const [formData, setFormData] = useState({
+    id: '',
     name: '',
     email: '',
     phone: '',
@@ -73,10 +74,14 @@ export default function SignupPage() {
     setLoading(true)
     
     try {
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
       })
+
+      if(data){
+        formData.id = data.user?.id || '';
+      }
 
       const response = await fetch('/api/waiting-list', {
         method: 'POST',
@@ -88,6 +93,7 @@ export default function SignupPage() {
 
       if(response.ok){
         console.log("r: ", await response.json())
+        setActiveTab('login');
         setError("Please confirm your signup! Email has been sent.")
       }else{
         console.log("r: ", await response.json())
@@ -98,7 +104,7 @@ export default function SignupPage() {
         return
       }
       
-      router.push('/payment')
+      //router.push('/payment')
     } catch (err) {
       setError('An unexpected error occurred')
     } finally {

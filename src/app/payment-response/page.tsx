@@ -30,7 +30,7 @@ export default function PaymentResponsePage() {
   }, [searchParams])
 
   const handleNextSteps = () => {
-    router.push('/form-generation')
+    router.push('/portal')
   }
 
   const handleTryAgain = () => {
@@ -70,7 +70,7 @@ export default function PaymentResponsePage() {
               <p className="text-sm"
               style={{color: 'var(--text-secondary)'}}
               >
-                Thank you for your payment. Your divorce forms are ready to be generated.
+                Thank you for your payment. You now have access to your client portal.
               </p>
             </div>
 
@@ -82,7 +82,7 @@ export default function PaymentResponsePage() {
                   <p className="text-xs"
                   style={{color: 'var(--text-secondary)'}}
                   >
-                    Get your completed forms and filing instructions
+                    Now you can access your profile & connect with digits for accounting.
                   </p>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function PaymentResponsePage() {
                 color: 'var(--text-primary)'
               }}
             >
-              <span>Get Your Forms</span>
+              <span>Go to Portal</span>
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -162,4 +162,4 @@ export default function PaymentResponsePage() {
       </div>
     </div>
   )
-} 
+}

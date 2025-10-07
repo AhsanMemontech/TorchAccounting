@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabaseClient'
+import { randomUUID } from 'crypto';
 
 // GoHighLevel API configuration
 const GHL_API_KEY = process.env.GHL_API_KEY
@@ -8,7 +9,7 @@ const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID
 export async function POST(request: NextRequest) {
   try {
     console.log("called api gohiglevel");
-    const { name, email, phone } = await request.json()
+    const { id, name, email, phone } = await request.json()
 
     // Validate required fields
     if (!name || !email || !phone) {
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
       .from('users')
       .insert([
         {
+          id: id,
           name: name.trim(),
           email: email.toLowerCase().trim(),
           phone: cleanPhone,

@@ -31,64 +31,12 @@ export interface UserSubscription {
 
 export class TrialManager {
   /**
-   * Start a 7-day trial for a new user
-   */
-  static async startTrial(userId: string): Promise<void> {
-    try {
-      const { error } = await supabase.rpc('start_trial_for_user', {
-        p_user_id: userId
-      })
-      
-      if (error) {
-        console.error('Error starting trial:', error)
-        throw error
-      }
-    } catch (error) {
-      console.error('Failed to start trial:', error)
-      throw error
-    }
-  }
-
-  /**
-   * Get trial status for a user
-   */
-  static async getTrialStatus(userId: string): Promise<TrialStatus | null> {
-    try {
-      const { data, error } = await supabase.rpc('get_trial_status', {
-        user_id: userId
-      })
-      
-      if (error) {
-        console.error('Error getting trial status:', error)
-        return null
-      }
-      
-      if (data && data.length > 0) {
-        const status = data[0]
-        return {
-          isTrialActive: status.is_trial_active,
-          trialStartDate: status.trial_start_date,
-          trialEndDate: status.trial_end_date,
-          daysRemaining: status.days_remaining,
-          hasPaid: status.has_paid,
-          subscriptionType: status.subscription_type
-        }
-      }
-      
-      return null
-    } catch (error) {
-      console.error('Failed to get trial status:', error)
-      return null
-    }
-  }
-
-  /**
-   * Check if user has access (trial active or has paid)
+   * Check if user has access (has paid)
    */
   static async hasAccess(userId: string): Promise<boolean> {
     try {
       const { data, error } = await supabase.rpc('user_has_access', {
-        user_id: userId
+        p_user_id: userId
       })
       
       if (error) {
@@ -99,19 +47,6 @@ export class TrialManager {
       return data || false
     } catch (error) {
       console.error('Failed to check access:', error)
-      return false
-    }
-  }
-
-  /**
-   * Check if user is in trial period
-   */
-  static async isInTrial(userId: string): Promise<boolean> {
-    try {
-      const status = await this.getTrialStatus(userId)
-      return status?.isTrialActive || false
-    } catch (error) {
-      console.error('Failed to check trial status:', error)
       return false
     }
   }
@@ -133,25 +68,6 @@ export class TrialManager {
       }
     } catch (error) {
       console.error('Failed to mark user as paid:', error)
-      throw error
-    }
-  }
-
-  /**
-   * End trial for user
-   */
-  static async endTrial(userId: string): Promise<void> {
-    try {
-      const { error } = await supabase.rpc('end_trial_for_user', {
-        user_id: userId
-      })
-      
-      if (error) {
-        console.error('Error ending trial:', error)
-        throw error
-      }
-    } catch (error) {
-      console.error('Failed to end trial:', error)
       throw error
     }
   }

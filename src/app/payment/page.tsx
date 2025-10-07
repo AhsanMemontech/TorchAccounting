@@ -6,7 +6,8 @@ import {
   CreditCard,  
   Lock, 
   ArrowRight, 
-  AlertCircle
+  AlertCircle,
+  Bug
 } from 'lucide-react'
 import { loadStripe } from '@stripe/stripe-js'
 import { supabase } from '@/lib/supabaseClient'
@@ -36,7 +37,7 @@ export default function PaymentPage() {
           }
         }
         
-        // If we have access, load user and trial data
+        // If we have access, load user
         const { data: { user } } = await supabase.auth.getUser()
         if (user) {
           setUserId(user.id)
@@ -93,6 +94,12 @@ export default function PaymentPage() {
     } finally {
       setIsPaying(false)
     }
+  }
+
+  // Development function to simulate successful payment
+  const handleDevSuccess = () => {
+    // Redirect to payment success page
+    router.push('/payment-response?success=true')
   }
 
   return (
@@ -158,6 +165,15 @@ export default function PaymentPage() {
                   </>
                 )}
               </button>
+              
+              <button
+                onClick={handleDevSuccess}
+                className="w-full mt-4 py-2 px-4 rounded-lg font-medium text-sm transition-all duration-300 flex items-center justify-center space-x-2 bg-amber-500 text-white hover:bg-amber-600"
+              >
+                <Bug className="h-4 w-4" />
+                <span>Test Success Payment</span>
+              </button>
+              
             </div>
           </div>
 
@@ -178,4 +194,4 @@ export default function PaymentPage() {
       </div>
     </div>
   )
-} 
+}
