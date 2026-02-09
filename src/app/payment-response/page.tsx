@@ -10,8 +10,8 @@ export default function PaymentResponsePage() {
   const [status, setStatus] = useState<'success' | 'failed' | 'loading'>('loading')
 
   useEffect(() => {
-    const success = searchParams.get('success')
-    const canceled = searchParams.get('canceled')
+    const success = searchParams?.get('success')
+    const canceled = searchParams?.get('canceled')
 
     const handlePaymentResponse = async () => {
       if (success === 'true') {
