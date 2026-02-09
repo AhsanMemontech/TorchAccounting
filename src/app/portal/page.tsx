@@ -21,6 +21,10 @@ import {
 } from 'lucide-react'
 import { AccessValidator } from '@/lib/accessValidator'
 import Link from 'next/link'
+import ReportsPage from "@/components/ReportsPage";
+import CFOAgentPage from '@/components/CFOAgentPage'
+import ConnectSources from '@/components/ConnectSources'
+// import RootLayout from "@/app/layout";
 
 interface ContactDetails {
   name: string
@@ -45,6 +49,19 @@ export default function PortalPage() {
   const [error, setError] = useState<string | null>(null)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [activeSection, setActiveSection] = useState('dashboard')
+
+  const [summary, setSummary] = useState<any>(null);
+
+  useEffect(() => {
+    if (activeSection !== "reports") return;
+
+    setLoading(true);
+    fetch("/api/financial-summary")
+      .then(res => res.json())
+      .then(data => setSummary(data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [activeSection]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -111,6 +128,10 @@ export default function PortalPage() {
     }))
   }
 
+  const OpenReportsPage = () => {
+    router.push('/digits-reports');
+  }
+
   const handleSaveChanges = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -148,10 +169,21 @@ export default function PortalPage() {
   }
 
   const handleDigitsConnect = () => {
-    // This is a placeholder for the Digits SSO login
-    // Will be implemented later
-    alert('Digits SSO integration will be implemented in a future update')
-  }
+    const clientId = process.env.NEXT_PUBLIC_DIGITS_CLIENT_ID;
+    const redirectUri = process.env.NEXT_PUBLIC_DIGITS_REDIRECT_URI;
+
+    if (!clientId || !redirectUri) {
+      alert("Digits client ID or redirect URI is not set!");
+      return;
+    }
+
+    const scope = "source:sync ledger:read documents:write"; // exact Digits scope
+  
+    const authUrl = `https://connect.digits.com/v1/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
+
+    // Redirect user to Digits OAuth page
+    window.location.href = authUrl;
+  };
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed)
@@ -209,7 +241,7 @@ export default function PortalPage() {
             <li>
               <button 
                 onClick={() => setActiveSection('dashboard')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'dashboard' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'dashboard' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
                 <LayoutDashboard className="h-5 w-5" style={{ color: activeSection === 'dashboard' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
@@ -220,7 +252,7 @@ export default function PortalPage() {
             <li>
               <button 
                 onClick={() => setActiveSection('profile')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'profile' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'profile' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
                 <User className="h-5 w-5" style={{ color: activeSection === 'profile' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
@@ -231,7 +263,7 @@ export default function PortalPage() {
             <li>
               <button 
                 onClick={() => setActiveSection('settings')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'settings' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'settings' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
                 <Settings className="h-5 w-5" style={{ color: activeSection === 'settings' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
@@ -242,20 +274,20 @@ export default function PortalPage() {
             <li>
               <button 
                 onClick={() => setActiveSection('digits')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'digits' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'digits' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
                 <ExternalLink className="h-5 w-5" style={{ color: activeSection === 'digits' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
-                  <span className="ml-3 text-sm" style={{ color: activeSection === 'digits' ? 'var(--accent-primary)' : 'var(--text-primary)' }}>Digits SSO</span>
+                  <span className="ml-3 text-sm" style={{ color: activeSection === 'digits' ? 'var(--accent-primary)' : 'var(--text-primary)' }}>Connect Sources</span>
                 )}
               </button>
             </li>
             <li>
-              <button 
+            <button 
                 onClick={() => setActiveSection('reports')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'reports' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'reports' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
-                <BarChart3 className="h-5 w-5" style={{ color: activeSection === 'reports' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
+                <ExternalLink className="h-5 w-5" style={{ color: activeSection === 'reports' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
                   <span className="ml-3 text-sm" style={{ color: activeSection === 'reports' ? 'var(--accent-primary)' : 'var(--text-primary)' }}>Reports</span>
                 )}
@@ -264,7 +296,7 @@ export default function PortalPage() {
             <li>
               <button 
                 onClick={() => setActiveSection('cfo')}
-                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'cfo' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-gray-100 dark:hover:bg-gray-800'}`}
+                className={`w-full flex items-center p-2 rounded-md transition-colors ${activeSection === 'cfo' ? 'bg-indigo-100 dark:bg-indigo-900' : 'hover:bg-indigo-500'}`}
               >
                 <MessageSquare className="h-5 w-5" style={{ color: activeSection === 'cfo' ? 'var(--accent-primary)' : 'var(--text-tertiary)' }} />
                 {!sidebarCollapsed && (
@@ -309,85 +341,7 @@ export default function PortalPage() {
         <div className="p-6 md:p-8 lg:p-10">
           {/* Dashboard Section */}
           {activeSection === 'dashboard' && (
-            <div>
-              <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                Dashboard
-              </h1>
-              
-              <div className="flex justify-end">
-                {/* Digits Integration Card */}
-                <div className="rounded-xl border p-6 backdrop-blur-md shadow-lg w-[30%]" 
-                  style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-card)' }}>
-                  <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
-                    Accounting Integration
-                  </h2>
-                  
-                  <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-5 mb-6">
-                    <div className="flex justify-center mb-4">
-                      <img 
-                        src="https://ram.digitscpu.com/_astro-assets/digits-logo.DSsydOMk_ZLWrDw.png" 
-                        alt="Digits Logo" 
-                        className="h-10"
-                      />
-                    </div>
-                    <p className="text-center text-sm text-gray-700 mb-4">
-                      Connect your account to Digits for seamless accounting integration and financial insights
-                    </p>
-                    <button
-                      onClick={handleDigitsConnect}
-                      className="w-full flex items-center justify-center space-x-2 py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      <span>Connect to Digits</span>
-                    </button>
-                  </div>
-                  
-                  <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    <p className="mb-2">Benefits of connecting:</p>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>Automated bookkeeping</li>
-                      <li>Real-time financial insights</li>
-                      <li>Expense tracking</li>
-                      <li>Tax preparation assistance</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                {/* Quick Stats Card */}
-                {/* <div className="rounded-xl border p-6 backdrop-blur-md shadow-lg" 
-                  style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-card)' }}>
-                  <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
-                    Coming Soon
-                  </h2>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3 p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                      <BarChart3 className="h-5 w-5" style={{ color: 'var(--text-tertiary)' }} />
-                      <div>
-                        <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Financial Reports</p>
-                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Access your financial reports and statements</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-3 p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                      <MessageSquare className="h-5 w-5" style={{ color: 'var(--text-tertiary)' }} />
-                      <div>
-                        <p className="font-medium" style={{ color: 'var(--text-primary)' }}>CFO Agent</p>
-                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Chat with your dedicated CFO AI assistant</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-3 p-3 rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                      <FileText className="h-5 w-5" style={{ color: 'var(--text-tertiary)' }} />
-                      <div>
-                        <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Document Management</p>
-                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Upload and manage your financial documents</p>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-              </div>
-            </div>
+            <h1></h1>
           )}
 
           {/* Profile Section */}
@@ -607,68 +561,15 @@ export default function PortalPage() {
             </div>
           )}
 
-          {/* Digits SSO Section */}
-          {activeSection === 'digits' && (
-            <div>
-              <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                Digits Integration
-              </h1>
-              <div className="rounded-xl border p-6 backdrop-blur-md shadow-lg" 
-                style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-card)' }}>
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-5 mb-6">
-                  <div className="flex justify-center mb-4">
-                    <img 
-                      src="https://ram.digitscpu.com/_astro-assets/digits-logo.DSsydOMk_ZLWrDw.png" 
-                      alt="Digits Logo" 
-                      className="h-10"
-                    />
-                  </div>
-                  <p className="text-center text-sm text-gray-700 mb-4">
-                    Connect your account to Digits for seamless accounting integration and financial insights
-                  </p>
-                  <button
-                    onClick={handleDigitsConnect}
-                    className="w-full flex items-center justify-center space-x-2 py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    <span>Connect to Digits</span>
-                  </button>
-                </div>
-                
-                <div className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  <p className="mb-2">Benefits of connecting:</p>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Automated bookkeeping</li>
-                    <li>Real-time financial insights</li>
-                    <li>Expense tracking</li>
-                    <li>Tax preparation assistance</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
+          {activeSection === 'reports' && <ReportsPage />}
+          {activeSection === 'cfo' && <CFOAgentPage />}
+          {/* <RootLayout /> */}
 
-          {/* Reports Section */}
-          {activeSection === 'reports' && (
-            <div>
-              <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                Financial Reports
-              </h1>
-              <div className="rounded-xl border p-6 backdrop-blur-md shadow-lg" 
-                style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-card)' }}>
-                <div className="flex items-center justify-center p-10">
-                  <div className="text-center">
-                    <BarChart3 className="h-16 w-16 mx-auto mb-4" style={{ color: 'var(--text-tertiary)' }} />
-                    <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Coming Soon</h2>
-                    <p style={{ color: 'var(--text-secondary)' }}>Financial reports will be available after connecting to Digits.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Digits SSO Section */}
+          {activeSection === 'digits' && <ConnectSources />}
 
           {/* CFO Agent Section */}
-          {activeSection === 'cfo' && (
+          {/* {activeSection === 'cfo' && (
             <div>
               <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
                 CFO Agent
@@ -684,7 +585,7 @@ export default function PortalPage() {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

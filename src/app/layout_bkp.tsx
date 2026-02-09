@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { cookies } from 'next/headers'
 import './globals.css'
+import { ChatbotProvider } from '@/components/ChatbotContext'
+import { ThemeProvider } from '@/components/ThemeContext'
 import './waiting-list.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,8 +27,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
+  const themeCookie = cookies().get('theme')?.value
+  const initialTheme = themeCookie === 'light' || themeCookie === 'dark'
+    ? themeCookie
+    : 'light'  
+
   return (
-    <html lang="en" data-theme={"light"} suppressHydrationWarning>
+    <html lang="en" data-theme={initialTheme} suppressHydrationWarning>
       <head>
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VYGFEBB6M"></script>
@@ -41,9 +49,16 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className + ' flex flex-col min-h-screen'}>
+        <ThemeProvider serverTheme={initialTheme}>
+          <ChatbotProvider>
+            {/* <Header /> */}
             <main className="flex-1" >
               {children} 
             </main>
+            {/* <Footer /> */}
+            {/* <ChatbotWidget /> */}
+          </ChatbotProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
