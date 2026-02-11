@@ -24,6 +24,7 @@ import Link from 'next/link'
 import ReportsPage from "@/components/ReportsPage";
 import CFOAgentPage from '@/components/CFOAgentPage'
 import ConnectSources from '@/components/ConnectSources'
+import DashboardPage from '@/components/DashboardPage'
 // import RootLayout from "@/app/layout";
 
 interface ContactDetails {
@@ -341,7 +342,7 @@ export default function PortalPage() {
         <div className="p-6 md:p-8 lg:p-10">
           {/* Dashboard Section */}
           {activeSection === 'dashboard' && (
-            <h1></h1>
+            <DashboardPage />
           )}
 
           {/* Profile Section */}

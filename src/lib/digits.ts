@@ -11,7 +11,7 @@ interface DigitsToken {
 }
 
 // Digits OAuth config
-const DIGITS_CLIENT_ID = process.env.DIGITS_CLIENT_ID!;
+const DIGITS_CLIENT_ID = process.env.NEXT_PUBLIC_DIGITS_CLIENT_ID!;
 const DIGITS_CLIENT_SECRET = process.env.DIGITS_CLIENT_SECRET!;
 const DIGITS_TOKEN_URL = 'https://api.digits.com/oauth/token'; // replace with actual URL
 
